@@ -1,14 +1,14 @@
 # yourfinance-backend
 # YourFinance
 
-YourFinance is a **progressive web application (PWA)** designed to help users take control of their personal finances. Built with a modern tech stack—**Ionic Angular frontend** and **C# .NET backend**—it leverages **OpenAI's API** to intelligently process receipts and provide meaningful financial insights.
+YourFinance is a **progressive web application (PWA)** designed to help users take control of their personal finances. Built with a modern tech stack—**Ionic Angular frontend** and **Node.js backend**—it leverages **Anthropic's API** to intelligently process receipts and provide meaningful financial insights.
 
 ---
 
 ## Features
 
 - **AI-Powered Receipt Scanning**  
-  Upload receipts and extract key transaction details (store name, amount, date) using OpenAI’s API.
+  Upload receipts and extract key transaction details (store name, amount, date) using Anthropic’s API.
 
 - **Expense & Income Tracking**  
   Log, categorize, and review all your income and expenses in a simple and clean interface.
@@ -32,8 +32,8 @@ YourFinance is a **progressive web application (PWA)** designed to help users ta
 | Layer         | Technology           |
 |--------------|----------------------|
 | Frontend     | Ionic + Angular      |
-| Backend      | C# .NET Web API      |
-| AI Integration | OpenAI API          |
+| Backend      | Node.js API      |
+| AI Integration | Anthropic API          |
 | Data Storage | PostgreSQL           |
 
 ---
@@ -43,13 +43,12 @@ YourFinance is a **progressive web application (PWA)** designed to help users ta
 ### Prerequisites
 
 - Node.js & npm
-- .NET 7 SDK or later
 - PostgreSQL
-- OpenAI API Key
+- Anthropic API Key
 
-### Frontend Setup
+### Backend Setup
 
 ```bash
-cd yourfinance-frontend
+cd yourfinance-back-end
 npm install
-ionic serve
+npm run start
