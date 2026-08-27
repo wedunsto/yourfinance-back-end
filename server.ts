@@ -5,7 +5,7 @@ import { allowedOrigins } from "./src/middleware/cors.middleware";
 import { authenticationRouter } from "./src/routes/authentication.routes";
 
 const app = express();
-const PORT = process.env.SERVER_PORT || 3000;
+const PORT = process.env.SERVER_PORT;
 
 app.use(express.json());
 
