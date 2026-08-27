@@ -10,7 +10,7 @@ app.use(express.json());
 app.use("/yourfinance", authenticationRouter);
 
 app.listen(PORT, () => {
-  console.log(`yourfinance-backend listening on port ${PORT}`);
+  console.log(`yourfinance-backend is running`);
 });
 
 module.exports = app;
