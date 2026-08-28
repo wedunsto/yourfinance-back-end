@@ -1,16 +1,23 @@
 import "dotenv/config";
+import cors from "cors";
 const express = require('express');
-const healthRoutes = require('./src/routes/health.routes');
+import { allowedOrigins } from "./src/middleware/cors.middleware";
+import { authenticationRouter } from "./src/routes/authentication.routes";
 
 const app = express();
-const PORT = process.env.SERVER_PORT || 3000;
+const PORT = process.env.SERVER_PORT;
 
 app.use(express.json());
 
-app.use('/api/health', healthRoutes);
+// Tell the browser which origins are permitted
+app.use(cors({
+    origin: allowedOrigins, credentials: true
+}));
+
+app.use("/yourfinance", authenticationRouter);
 
 app.listen(PORT, () => {
-  console.log(`yourfinance-backend listening on port ${PORT}`);
+  console.log(`yourfinance-backend is running`);
 });
 
 module.exports = app;
