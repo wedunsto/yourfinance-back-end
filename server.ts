@@ -14,7 +14,7 @@ app.use(cors({
     origin: allowedOrigins, credentials: true
 }));
 
-app.use("/yourfinance", authenticationRouter);
+app.use("/yourfinance/user", authenticationRouter);
 
 app.listen(PORT, () => {
   console.log(`yourfinance-backend is running`);
