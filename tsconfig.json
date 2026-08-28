@@ -13,6 +13,6 @@
     "skipLibCheck": true,
     "strict": true
   },
-  "include": ["server.ts", "src/**/*"],
+  "include": ["server.ts", "src/**/*", "prisma.config.ts"],
   "exclude": ["node_modules", "dist"]
 }

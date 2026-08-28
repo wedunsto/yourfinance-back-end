@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { registerUser } from "../services/authentication.service";
+import { registerUser, UsernameTakenError } from "../services/authentication.service";
 import { ErrorResponseDto } from "../models/error.dto";
 
 const PASSWORD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,}$/;
@@ -45,6 +45,16 @@ export async function register(req: Request, res: Response): Promise<void> {
     const result = await registerUser(username, password);
     res.status(201).json(result);
   } catch (err) {
+    if (err instanceof UsernameTakenError) {
+      const error: ErrorResponseDto = {
+        statusCode: 409,
+        name: "Conflict",
+        message: err.message,
+      };
+      res.status(409).json(error);
+      return;
+    }
+
     const error: ErrorResponseDto = {
       statusCode: 500,
       name: "InternalServerError",
