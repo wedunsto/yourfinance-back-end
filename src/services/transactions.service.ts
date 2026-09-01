@@ -2,6 +2,24 @@ import { randomUUID } from "node:crypto";
 import { prisma } from "./prisma.service";
 import { CreateTransactionRequestDto, TransactionDto } from "../models/transaction.dto";
 
+export async function fetchTransactions(user_id: string): Promise<TransactionDto[]> {
+  const transactions = await prisma.transactions.findMany({
+    where: { user_id },
+  });
+
+  return transactions.map((transaction) => ({
+    id: transaction.id,
+    user_id: transaction.user_id,
+    transaction_name: transaction.transaction_name,
+    transaction_amount: transaction.transaction_amount.toNumber(),
+    transaction_date: transaction.transaction_date.toISOString(),
+    category: transaction.category,
+    vendor_name: transaction.vendor_name,
+    credit: transaction.credit,
+    updated_at: transaction.updated_at.toISOString(),
+  }));
+}
+
 export async function writeTransaction(
   transaction: CreateTransactionRequestDto
 ): Promise<TransactionDto> {

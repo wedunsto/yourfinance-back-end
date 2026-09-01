@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import jwt from "jsonwebtoken";
-import { writeTransaction } from "../services/transactions.service";
+import { fetchTransactions, writeTransaction } from "../services/transactions.service";
 import { ErrorResponseDto } from "../models/error.dto";
 
 function isMissing(value: unknown): boolean {
@@ -91,6 +91,56 @@ export async function createTransaction(req: Request, res: Response): Promise<vo
       statusCode: 500,
       name: "InternalServerError",
       message: "An unexpected error occurred while creating the transaction",
+    };
+    res.status(500).json(error);
+  }
+}
+
+export async function readTransctions(req: Request, res: Response): Promise<void> {
+  const token = getBearerToken(req);
+
+  if (!token) {
+    const error: ErrorResponseDto = {
+      statusCode: 401,
+      name: "Unauthorized",
+      message: "Missing bearer token",
+    };
+    res.status(401).json(error);
+    return;
+  }
+
+  try {
+    jwt.verify(token, process.env["JWT_SECRET"] as string);
+  } catch (err) {
+    const error: ErrorResponseDto = {
+      statusCode: 401,
+      name: "Unauthorized",
+      message: "Invalid or expired token",
+    };
+    res.status(401).json(error);
+    return;
+  }
+
+  const { user_id } = req.query;
+
+  if (isMissing(user_id)) {
+    const error: ErrorResponseDto = {
+      statusCode: 400,
+      name: "BadRequest",
+      message: "Missing required field(s): user_id",
+    };
+    res.status(400).json(error);
+    return;
+  }
+
+  try {
+    const result = await fetchTransactions(user_id as string);
+    res.status(201).json(result);
+  } catch (err) {
+    const error: ErrorResponseDto = {
+      statusCode: 500,
+      name: "InternalServerError",
+      message: "An unexpected error occurred while fetching transactions",
     };
     res.status(500).json(error);
   }
