@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import {
   registerUser,
   loginUser,
+  usernameExists,
   UsernameTakenError,
 } from "../services/authentication.service";
 import { ErrorResponseDto } from "../models/error.dto";
@@ -63,6 +64,32 @@ export async function register(req: Request, res: Response): Promise<void> {
       statusCode: 500,
       name: "InternalServerError",
       message: "An unexpected error occurred while registering the user",
+    };
+    res.status(500).json(error);
+  }
+}
+
+export async function checkUsernameExists(req: Request, res: Response): Promise<void> {
+  const { username } = req.query ?? {};
+
+  if (isMissing(username)) {
+    const error: ErrorResponseDto = {
+      statusCode: 400,
+      name: "BadRequest",
+      message: "Missing required field(s): username",
+    };
+    res.status(400).json(error);
+    return;
+  }
+
+  try {
+    const exists = await usernameExists(username as string);
+    res.status(200).json({ exists });
+  } catch (err) {
+    const error: ErrorResponseDto = {
+      statusCode: 500,
+      name: "InternalServerError",
+      message: "An unexpected error occurred while checking the username",
     };
     res.status(500).json(error);
   }

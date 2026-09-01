@@ -45,6 +45,11 @@ export async function registerUser(
   }
 }
 
+export async function usernameExists(username: string): Promise<boolean> {
+  const user = await prisma.users.findUnique({ where: { username } });
+  return user !== null;
+}
+
 export async function loginUser(
   username: string,
   password: string
