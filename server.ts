@@ -3,6 +3,7 @@ import cors from "cors";
 const express = require('express');
 import { allowedOrigins } from "./src/middleware/cors.middleware";
 import { authenticationRouter } from "./src/routes/authentication.routes";
+import { transactionRouter } from "./src/routes/transactions.routes";
 
 const app = express();
 const PORT = process.env.SERVER_PORT;
@@ -15,6 +16,7 @@ app.use(cors({
 }));
 
 app.use("/yourfinance/user", authenticationRouter);
+app.use("/yourfinance/transactions", transactionRouter);
 
 app.listen(PORT, () => {
   console.log(`yourfinance-backend is running`);
