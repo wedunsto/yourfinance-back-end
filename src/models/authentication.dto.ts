@@ -14,4 +14,6 @@ export interface LoginRequestDto {
 
 export interface LoginResponseDto {
   jsonwebtoken: string;
+  isOnboarded: boolean;
+  userId: string;
 }

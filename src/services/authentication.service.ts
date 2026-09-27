@@ -72,5 +72,9 @@ export async function loginUser(
     { expiresIn: process.env["JWT_EXPIRES"] as SignOptions["expiresIn"] }
   );
 
-  return { jsonwebtoken };
+  return { 
+    jsonwebtoken: jsonwebtoken,
+    isOnboarded: user.onboarded,
+    userId: user.id
+  };
 }

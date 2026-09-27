@@ -15,7 +15,7 @@ app.use(cors({
     origin: allowedOrigins, credentials: true
 }));
 
-app.use("/yourfinance/user", authenticationRouter);
+app.use("/yourfinance/users", authenticationRouter);
 app.use("/yourfinance/transactions", transactionRouter);
 
 app.listen(PORT, () => {
