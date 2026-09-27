@@ -18,3 +18,7 @@ export interface CreateTransactionRequestDto {
   vendor_name: string;
   credit: boolean;
 }
+
+export interface DeleteTransactionResponseDto {
+  transaction_id: string;
+}
